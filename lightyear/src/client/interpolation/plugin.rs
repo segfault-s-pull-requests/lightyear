@@ -56,7 +56,7 @@ impl InterpolationDelay {
 }
 
 /// Config to specify how the snapshot interpolation should behave
-#[derive(Clone, Copy, Reflect)]
+#[derive(Debug, Clone, Copy, Reflect)]
 pub struct InterpolationConfig {
     /// The minimum delay that we will apply for interpolation
     /// This should be big enough so that the interpolated entity always has a server snapshot

@@ -351,6 +351,7 @@ pub(crate) fn send_host_server(
 
 /// Bevy [`State`] representing the networking state of the server.
 #[derive(States, Default, Debug, Clone, Copy, PartialEq, Eq, Hash, Reflect)]
+#[reflect(State)]
 pub enum NetworkingState {
     /// 1 frame transition to run the Receive/Events system sets while the server is shutting down
     Stopping,

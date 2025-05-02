@@ -89,7 +89,7 @@ pub struct ClientConnection {
 pub type IoConfig = SharedIoConfig<ClientTransport>;
 
 #[allow(clippy::large_enum_variant)]
-#[derive(Clone, Reflect)]
+#[derive(Debug, Clone, Reflect)]
 #[reflect(from_reflect = false)]
 pub enum NetConfig {
     Netcode {

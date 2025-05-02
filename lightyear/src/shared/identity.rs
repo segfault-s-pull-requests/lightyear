@@ -41,7 +41,7 @@ impl ComputedStates for NetworkIdentityState {
     }
 }
 
-#[derive(SystemParam)]
+#[derive(Debug, SystemParam)]
 pub struct NetworkIdentity<'w> {
     identity: Option<Res<'w, State<NetworkIdentityState>>>,
 }

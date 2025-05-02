@@ -12,7 +12,7 @@ use crate::shared::config::SharedConfig;
 use crate::shared::ping::manager::PingConfig;
 use crate::shared::replication::plugin::ReplicationConfig;
 
-#[derive(Clone, Reflect)]
+#[derive(Debug, Clone, Reflect)]
 /// Config related to the netcode protocol (abstraction of a connection over raw UDP-like transport)
 pub struct NetcodeConfig {
     pub num_disconnect_packets: usize,
@@ -46,7 +46,7 @@ impl NetcodeConfig {
     }
 }
 
-#[derive(Clone, Copy, Reflect)]
+#[derive(Debug, Clone, Copy, Reflect)]
 #[reflect(from_reflect = false)]
 pub struct PacketConfig {
     /// After how many multiples of RTT do we consider a packet to be lost?
@@ -111,7 +111,7 @@ impl PacketConfig {
 /// You can also modify it while the app is running, and the new values will be used on the next
 /// time that the client tries to connect. This can be useful to change some configuration values at runtime.
 /// For example, you can update the server address dynamically to choose which server to connect to.
-#[derive(Resource, Clone, Default, Reflect)]
+#[derive(Debug, Resource, Clone, Default, Reflect)]
 #[reflect(from_reflect = false)]
 pub struct ClientConfig {
     pub shared: SharedConfig,
