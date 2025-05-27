@@ -13,7 +13,7 @@ use lightyear::{
     transport::io::IoDiagnosticsPlugin,
 };
 use lightyear::{
-    client::prediction::rollback::DisableRollback, prelude::server::ReplicationTarget,
+    client::prediction::rollback::DisableRollback, prelude::server::ReplicateToClient,
 };
 
 pub struct ExampleRendererPlugin;
@@ -84,7 +84,7 @@ type PosToTransformComponents = (
     &'static mut Transform,
     &'static Position,
     &'static Rotation,
-    Option<&'static Parent>,
+    Option<&'static ChildOf>,
 );
 
 // Avian's sync plugin only runs for entities with RigidBody, but we want to also apply it for interpolated entities
@@ -94,7 +94,7 @@ pub fn position_to_transform_for_interpolated(
 ) {
     for (mut transform, pos, rot, parent) in &mut query {
         if let Some(parent) = parent {
-            if let Ok((parent_transform, parent_pos, parent_rot)) = parents.get(**parent) {
+            if let Ok((parent_transform, parent_pos, parent_rot)) = parents.get(parent.parent()) {
                 let parent_transform = parent_transform.compute_transform();
                 let parent_pos = parent_pos.map_or(parent_transform.translation, |pos| pos.f32());
                 let parent_rot = parent_rot.map_or(parent_transform.rotation, |rot| rot.f32());
@@ -133,11 +133,11 @@ fn add_visual_interpolation_components(
     query: Query<Entity, (With<Predicted>, Without<FloorMarker>)>,
     mut commands: Commands,
 ) {
-    if !query.contains(trigger.entity()) {
+    if !query.contains(trigger.target()) {
         return;
     }
     commands
-        .entity(trigger.entity())
+        .entity(trigger.target())
         .insert(VisualInterpolateStatus::<Transform> {
             // We must trigger change detection on visual interpolation
             // to make sure that child entities (sprites, meshes, text)
@@ -156,7 +156,7 @@ fn add_character_cosmetics(
         (
             Or<(
                 Added<Predicted>,
-                Added<ReplicationTarget>,
+                Added<ReplicateToClient>,
                 Added<Interpolated>,
             )>,
             With<CharacterMarker>,
@@ -182,7 +182,7 @@ fn add_projectile_cosmetics(
     character_query: Query<
         (Entity),
         (
-            Or<(Added<Predicted>, Added<ReplicationTarget>)>,
+            Or<(Added<Predicted>, Added<ReplicationMarker>)>,
             With<ProjectileMarker>,
         ),
     >,
@@ -224,7 +224,7 @@ fn add_block_cosmetics(
     floor_query: Query<
         Entity,
         (
-            Or<(Added<Predicted>, Added<ReplicationTarget>)>,
+            Or<(Added<Predicted>, Added<ReplicateToClient>)>,
             With<BlockMarker>,
         ),
     >,
