@@ -198,7 +198,7 @@ fn send_host_server_input_message<A: LeafwingUserAction>(
         "Sending host-server input message"
     );
 
-    events.send(ServerReceiveMessage::new(message, netclient.id()));
+    events.write(ServerReceiveMessage::new(message, netclient.id()));
 }
 
 pub(crate) fn rebroadcast_inputs<A: LeafwingUserAction>(

@@ -49,7 +49,7 @@ pub(crate) fn buffer_input(
     mut query: Query<&mut ActionState<Inputs>, With<InputMarker<Inputs>>>,
     keypress: Res<ButtonInput<KeyCode>>,
 ) {
-    if let Ok(mut action_state) = query.get_single_mut() {
+    if let Ok(mut action_state) = query.single_mut() {
         if keypress.pressed(KeyCode::KeyW) || keypress.pressed(KeyCode::ArrowUp) {
             action_state.value = Some(Inputs::Direction(Direction::Up));
         } else if keypress.pressed(KeyCode::KeyS) || keypress.pressed(KeyCode::ArrowDown) {

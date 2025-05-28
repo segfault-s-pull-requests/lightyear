@@ -55,7 +55,7 @@ fn update_cursor_state_from_window(
     q_camera: Query<(&Camera, &GlobalTransform)>,
     mut action_state_query: Query<&mut ActionState<PlayerActions>, With<Predicted>>,
 ) {
-    let Ok((camera, camera_transform)) = q_camera.get_single() else {
+    let Ok((camera, camera_transform)) = q_camera.single() else {
         error!("Expected to find only one camera");
         return;
     };

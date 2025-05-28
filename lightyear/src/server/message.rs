@@ -437,11 +437,10 @@ mod tests {
         stepper
             .server_app
             .world_mut()
-            .resource_mut::<Events<ServerSendMessage<StringMessage>>>()
-            .send(ServerSendMessage::new_with_target::<Channel1>(
-                StringMessage("a".to_string()),
-                NetworkTarget::All,
-            ));
+            .resource_mut::<Events<ServerSendMessage<StringMessage>>>().write(ServerSendMessage::new_with_target::<Channel1>(
+            StringMessage("a".to_string()),
+            NetworkTarget::All,
+        ));
 
         stepper.frame_step();
         stepper.frame_step();

@@ -128,7 +128,7 @@ pub(crate) fn change_ball_color_on_authority(
     mut balls: Query<&mut PlayerColor, (With<BallMarker>, Without<PlayerId>, With<Interpolated>)>,
 ) {
     for event in messages.drain() {
-        if let Ok(mut ball_color) = balls.get_single_mut() {
+        if let Ok(mut ball_color) = balls.single_mut() {
             match event.message {
                 AuthorityPeer::Server => {
                     ball_color.0 = Color::WHITE;

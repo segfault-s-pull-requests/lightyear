@@ -65,8 +65,8 @@ fn display_score(
     mut score_text: Query<&mut Text, With<ScoreText>>,
     hits: Query<&Score, With<Replicated>>,
 ) {
-    if let Ok(score) = hits.get_single() {
-        if let Ok(mut text) = score_text.get_single_mut() {
+    if let Ok(score) = hits.single() {
+        if let Ok(mut text) = score_text.single_mut() {
             text.0 = format!("Score: {}", score.0);
         }
     }

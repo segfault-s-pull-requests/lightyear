@@ -65,7 +65,7 @@ pub(crate) fn buffer_input(
     mut query: Query<&mut ActionState<Inputs>, With<InputMarker<Inputs>>>,
     keypress: Res<ButtonInput<KeyCode>>,
 ) {
-    if let Ok(mut action_state) = query.get_single_mut() {
+    if let Ok(mut action_state) = query.single_mut() {
         let mut input = None;
         let mut direction = Direction {
             up: false,
@@ -177,7 +177,7 @@ fn cursor_movement(
         if player_id.0 != client_id {
             return;
         }
-        if let Ok(window) = window_query.get_single() {
+        if let Ok(window) = window_query.single() {
             if let Some(mouse_position) = window_relative_mouse_position(window) {
                 // only update the cursor if it's changed
                 cursor_position.set_if_neq(CursorPosition(mouse_position));

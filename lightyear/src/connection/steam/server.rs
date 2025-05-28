@@ -192,8 +192,7 @@ impl NetServer for Server {
     fn try_update(&mut self, delta_ms: f64) -> Result<Vec<ConnectionError>, ConnectionError> {
         self.steamworks_client
             .try_write()
-            .expect("could not get steamworks client")
-            .get_single()
+            .expect("could not get steamworks client").single()
             .run_callbacks();
 
         // reset connection events

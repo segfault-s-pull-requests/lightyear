@@ -41,7 +41,7 @@ pub struct ConnectionEvents {
     empty: bool,
 }
 
-pub(crate) trait ClearEvents {
+pub trait ClearEvents {
     fn clear(&mut self);
 }
 

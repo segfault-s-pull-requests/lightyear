@@ -78,7 +78,7 @@ fn handle_connection(
 ) {
     for event in connection_event.read() {
         let client_id = event.client_id();
-        if let Ok(entity) = debug_text.get_single() {
+        if let Ok(entity) = debug_text.single() {
             commands.entity(entity).despawn();
         }
     }
@@ -120,7 +120,7 @@ mod game {
         mut query: Query<&mut ActionState<Inputs>, With<InputMarker<Inputs>>>,
         keypress: Res<ButtonInput<KeyCode>>,
     ) {
-        if let Ok(mut action_state) = query.get_single_mut() {
+        if let Ok(mut action_state) = query.single_mut() {
             let mut input = None;
             let mut direction = Direction {
                 up: false,
